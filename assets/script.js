@@ -19,6 +19,7 @@ function confirmCharacter() {
 }
 
 function generatePassword() {
+    var selectedCharacters = [];
     var passwordLength = window.prompt("How many characters would you like your password to contain(8-123)");
     console.log(passwordLength);
     if (passwordLength === null) {
@@ -32,6 +33,19 @@ function generatePassword() {
     }
     else {
         confirmCharacter();
+//Confirmed character types are added into an array which will be used to ensure at least one character from each type will be selected.
+        if (lowercaseSelected) {
+            selectedCharacters.push('L');
+        }
+        if (uppercaseSelected) {
+            selectedCharacters.push('U');
+        }
+        if (numericSelected) {
+            selectedCharacters.push('N');
+        }
+        if (specialSelected) {
+            selectedCharacters.push('S');
+        }
     }
 };
 
