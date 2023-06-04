@@ -28,13 +28,13 @@ var specialCharacters = [
     '-',
     '_',
     '.'
-  ];
-  
-  // Array of numeric characters to be included in password
-  var numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  
-  // Array of lowercase characters to be included in password
-  var lowerCasedCharacters = [
+];
+
+// Array of numeric characters to be included in password
+var numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+// Array of lowercase characters to be included in password
+var lowerCasedCharacters = [
     'a',
     'b',
     'c',
@@ -61,10 +61,10 @@ var specialCharacters = [
     'x',
     'y',
     'z'
-  ];
-  
-  // Array of uppercase characters to be included in password
-  var upperCasedCharacters = [
+];
+
+// Array of uppercase characters to be included in password
+var upperCasedCharacters = [
     'A',
     'B',
     'C',
@@ -91,9 +91,10 @@ var specialCharacters = [
     'X',
     'Y',
     'Z'
-  ];
+];
 
 function confirmCharacter() {
+    var confirmed = false;
     lowercaseSelected = window.confirm("Click OK to confirm including lowercase letters?");
     uppercaseSelected = window.confirm("Click OK to confirm including uppercase letters?");
     numericSelected = window.confirm("Click OK to confirm including numeric characters?");
@@ -101,18 +102,41 @@ function confirmCharacter() {
     if (!lowercaseSelected && !uppercaseSelected && !numericSelected && !specialSelected) {
         var confirmAgain = window.confirm("You haven't confirmed any character types.Do you want to confirm?");
         if (confirmAgain) {
-            confirmCharacter();
+            if (confirmCharacter()) {
+                confirmed = true;
+                return confirmed;
+            }
+            else {
+                confirmed = false;
+                return confirmed;
+            }
         }
+        else {
+            confirmed = false;
+            return confirmed;
+        }
+
     }
-    return;
+    else {
+        confirmed = true;
+        return confirmed;
+    }
+
 }
 
 function generatePassword() {
     var selectedCharacters = [];
+    var randomPassword = "";
+    var charArrayLength = 0;
+    var characterTypes=[];
     var passwordLength = window.prompt("How many characters would you like your password to contain(8-123)");
     console.log(passwordLength);
     if (passwordLength === null) {
-        return;
+        return randomPassword;
+    }
+    else if(isNaN(passwordLength))
+    {
+        window.alert("Enter a number");
     }
     else if (passwordLength < 8) {
         window.alert("Password should contain at least 8 characters");
@@ -121,55 +145,56 @@ function generatePassword() {
         window.alert("Password length should not exceed 123 characters");
     }
     else {
-        confirmCharacter();
-        //Confirmed character types are added into an array which will be used to ensure at least one character from each type will be selected.
-        if (lowercaseSelected) {
-            selectedCharacters.push('L');
-        }
-        if (uppercaseSelected) {
-            selectedCharacters.push('U');
-        }
-        if (numericSelected) {
-            selectedCharacters.push('N');
-        }
-        if (specialSelected) {
-            selectedCharacters.push('S');
-        }
-        var randomPassword = "";
-        var charArrayLength = 0;
-        for (i = 0; i < passwordLength; i++) {
-            if (charArrayLength === 0) {
-                characterTypes = selectedCharacters;
-                charArrayLength = selectedCharacters.length;
-            }
-            var index = Math.floor(Math.random() * characterTypes.length);
-            randomCharacter = characterTypes[index];
-            characterTypes = characterTypes.toSpliced(index, 1);
-            charArrayLength--;
-            if (randomCharacter === 'L') {
-                randomLowercase = lowerCasedCharacters[Math.floor(Math.random() * lowerCasedCharacters.length)];
-                randomPassword = randomPassword + randomLowercase;
-            }
-            else if (randomCharacter === 'U') {
-                randomUppercase = upperCasedCharacters[Math.floor(Math.random() * upperCasedCharacters.length)];
-                randomPassword = randomPassword + randomUppercase;
-            }
-            else if (randomCharacter === 'N') {
-                randomNumeric = numericCharacters[Math.floor(Math.random() * numericCharacters.length)];
-                randomPassword = randomPassword + randomNumeric;
 
+        if (confirmCharacter()) {
+            //Confirmed character types are added into an array , 'selectedCharacters' which will be used to ensure at least one character from each type will be selected.
+            if (lowercaseSelected) {
+                selectedCharacters.push('L');
             }
-            else if (randomCharacter === 'S') {
-                randomSpecial = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
-                randomPassword = randomPassword + randomSpecial;
-
+            if (uppercaseSelected) {
+                selectedCharacters.push('U');
             }
-            else {
-                window.alert("Please select at least one character type");
-                return;
+            if (numericSelected) {
+                selectedCharacters.push('N');
+            }
+            if (specialSelected) {
+                selectedCharacters.push('S');
             }
 
+            for (i = 0; i < passwordLength; i++) {
+                if (charArrayLength === 0) {
+                    characterTypes = selectedCharacters;
+                    charArrayLength = selectedCharacters.length;
+                }
+                var index = Math.floor(Math.random() * characterTypes.length);
+                randomCharacter = characterTypes[index];
+                characterTypes = characterTypes.toSpliced(index, 1);
+                charArrayLength--;
+                if (randomCharacter === 'L') {
+                    randomLowercase = lowerCasedCharacters[Math.floor(Math.random() * lowerCasedCharacters.length)];
+                    randomPassword = randomPassword + randomLowercase;
+                }
+                else if (randomCharacter === 'U') {
+                    randomUppercase = upperCasedCharacters[Math.floor(Math.random() * upperCasedCharacters.length)];
+                    randomPassword = randomPassword + randomUppercase;
+                }
+                else if (randomCharacter === 'N') {
+                    randomNumeric = numericCharacters[Math.floor(Math.random() * numericCharacters.length)];
+                    randomPassword = randomPassword + randomNumeric;
 
+                }
+                else if (randomCharacter === 'S') {
+                    randomSpecial = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+                    randomPassword = randomPassword + randomSpecial;
+
+                }
+                else {
+                    
+                    return;
+                }
+
+
+            }
         }
     }
     return randomPassword;
