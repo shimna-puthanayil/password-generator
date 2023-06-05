@@ -77,7 +77,7 @@ function generatePassword() {
     var selectedCharacters = [];
     var randomPassword = "";
     var characterTypes = [];
-    var passwordLength = window.prompt("How many characters would you like your password to contain(8-123)");
+    var passwordLength = window.prompt("How many characters would you like your password to contain(8-128)");
     //validation
     if (passwordLength === null) {
         return randomPassword;
@@ -107,8 +107,9 @@ function generatePassword() {
             if (specialSelected) {
                 selectedCharacters.push('S');
             }
-
+        
             for (i = 0; i < passwordLength; i++) {
+
                 //selected character type array 'selectedCharacters' is copied into another array 'characterTypes' .
 
                 if (characterTypes.length === 0) {
