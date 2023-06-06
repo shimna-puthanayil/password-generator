@@ -43,7 +43,7 @@ https://shimna-puthanayil.github.io/password-generator/
 
 ## Credits
 
-Code in line numbers 51 and 125 in script.js has been copied from stack overflow.
+Code on line numbers 51 and 125 in script.js has been copied from stack overflow.
 https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array
 
 References
